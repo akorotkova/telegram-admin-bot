@@ -1,15 +1,11 @@
-from environs import Env
+from tg_bot.config import load_config
 from aiogram import Bot, Dispatcher
 from aiogram.filters import CommandStart
 from aiogram.types import Message
 
 
-env = Env()            
-env.read_env()  # читаем файл .env с переменными окружения
-                          
-bot_token = env('BOT_TOKEN')
-
-bot: Bot = Bot(bot_token)
+config = load_config('.env')
+bot: Bot = Bot(config.tg_bot.token)
 dp: Dispatcher = Dispatcher()
 
 
@@ -21,4 +17,3 @@ async def process_start_command(message: Message):
 
 if __name__ == '__main__':
     dp.run_polling(bot)
-    
