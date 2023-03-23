@@ -13,17 +13,17 @@ dp: Dispatcher = Dispatcher()
 # хендлер для команды /start и /help
 @dp.message(Command(commands=['start', 'help']))
 async def process_start_and_help_cmd(message: Message):
-    await message.answer(text_responses.START_AND_HELP_TEXT, parse_mode='HTML')
+    await message.answer(text_responses.START_AND_HELP_TEXT)
 
 
-# хендлер для команды !command_admin_bot
-@dp.message(Command('command_admin_bot', prefix='!'))
+# хендлер для команды /command_admin_bot
+@dp.message(Command('command_admin_bot'))
 async def process_command_admin_bot_cmd(message: Message):
     await message.answer(text_responses.COMMAND_ADMIN_BOT_TEXT)
 
 
-# хендлер для команды !about_admin_bot
-@dp.message(Command('about_admin_bot', prefix='!'))
+# хендлер для команды /about_admin_bot
+@dp.message(Command('about_admin_bot'))
 async def process_about_admin_bot_cmd(message: Message):
     await message.reply(text_responses.ABOUT_ADMIN_BOT_TEXT)
 

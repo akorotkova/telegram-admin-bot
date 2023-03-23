@@ -41,7 +41,7 @@ def load_config(path: str) -> Config:
     database = env('DATABASE')
     db_host = env('DB_HOST')
     db_user = env('DB_USER')
-    db_password=env('DB_PASSWORD')
+    db_password = env('DB_PASSWORD')
     db = DbConfig(database, db_host, db_user, db_password)
     
     config = Config(tg_bot, db)
