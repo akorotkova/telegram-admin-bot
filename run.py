@@ -1,32 +1,25 @@
-from tg_bot.config import load_config
+import asyncio
 from aiogram import Bot, Dispatcher
-from aiogram.filters import Command
-from aiogram.types import Message
-import tg_bot.bot_responses.text as text_responses
+from tg_bot.config import load_config
+from tg_bot.handlers.base_handlers import register_base_handlers
 
 
-config = load_config('.env')
-bot: Bot = Bot(config.tg_bot.token)
-dp: Dispatcher = Dispatcher()
+# регистрация всех хендлеров
+def register_all_handlers(dp):
+    register_base_handlers(dp)
 
 
-# хендлер для команды /start и /help
-@dp.message(Command(commands=['start', 'help']))
-async def process_start_and_help_cmd(message: Message):
-    await message.answer(text_responses.START_AND_HELP_TEXT)
-
-
-# хендлер для команды /command_admin_bot
-@dp.message(Command('command_admin_bot'))
-async def process_command_admin_bot_cmd(message: Message):
-    await message.answer(text_responses.COMMAND_ADMIN_BOT_TEXT)
-
-
-# хендлер для команды /about_admin_bot
-@dp.message(Command('about_admin_bot'))
-async def process_about_admin_bot_cmd(message: Message):
-    await message.reply(text_responses.ABOUT_ADMIN_BOT_TEXT)
+async def main():
+    config = load_config('.env')
+    bot: Bot = Bot(config.tg_bot.token)
+    dp: Dispatcher = Dispatcher()
+    
+    register_all_handlers(dp)
+    
+    # запуск бота
+    await dp.start_polling(bot, close_bot_session=True)
 
 
 if __name__ == '__main__':
-    dp.run_polling(bot)
+    asyncio.run(main())
+    
