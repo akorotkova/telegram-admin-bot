@@ -2,11 +2,13 @@ import asyncio
 from aiogram import Bot, Dispatcher
 from tg_bot.config import load_config
 from tg_bot.handlers.base_handlers import register_base_handlers
+from tg_bot.handlers.admin_handlers import register_admin_handlers
 
 
 # регистрация всех хендлеров
 def register_all_handlers(dp):
     register_base_handlers(dp)
+    register_admin_handlers(dp)
 
 
 async def main():

@@ -6,12 +6,12 @@ from tg_bot.bot_responses import base_commands as text
 
 # хендлер для команды /start и /help
 async def process_start_and_help_cmd(message: Message):
-    await message.answer(text.START_AND_HELP_TEXT)
+    await message.answer(text.START_AND_HELP_TEXT, parse_mode='HTML')
 
 
 # хендлер для команды /command_admin_bot
 async def process_command_admin_bot_cmd(message: Message):
-    await message.answer(text.COMMAND_ADMIN_BOT_TEXT)
+    await message.answer(text.COMMAND_ADMIN_BOT_TEXT, parse_mode='HTML')
 
 
 # хендлер для команды /about_admin_bot
