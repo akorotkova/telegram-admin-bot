@@ -1,8 +1,11 @@
-from aiogram import Dispatcher, Bot
+from aiogram import Bot, Router
 from aiogram.types import Message
 from aiogram.filters import Command
 from tg_bot.bot_responses import admin_commands as text
 from tg_bot.keyboards.admin_menu import get_setting_buttons
+
+
+router: Router = Router()
 
 
 # хендлер для команды /current_settings
@@ -48,11 +51,11 @@ async def process_setting_ladder_cmd(message: Message):
 
 
 # регистрируем все admin хендлеры
-def register_admin_handlers(dp: Dispatcher):
-    dp.message.register(process_current_settings_cmd, Command(commands=['current_settings']))
-    dp.message.register(process_deleting_voice_cmd, Command(commands=['deleting_voice']))
-    dp.message.register(process_deleting_video_cmd, Command(commands=['deleting_video']))
-    dp.message.register(process_warning_ladder_cmd, Command(commands=['warning_ladder']))
-    dp.message.register(process_deleting_ladder_cmd, Command(commands=['deleting_ladder']))
-    dp.message.register(process_setting_ladder_cmd, Command(commands=['setting_ladder']))
+def register_admin_handlers(router: Router):
+    router.message.register(process_current_settings_cmd, Command(commands=['current_settings']))
+    router.message.register(process_deleting_voice_cmd, Command(commands=['deleting_voice']))
+    router.message.register(process_deleting_video_cmd, Command(commands=['deleting_video']))
+    router.message.register(process_warning_ladder_cmd, Command(commands=['warning_ladder']))
+    router.message.register(process_deleting_ladder_cmd, Command(commands=['deleting_ladder']))
+    router.message.register(process_setting_ladder_cmd, Command(commands=['setting_ladder']))
     

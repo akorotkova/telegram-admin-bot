@@ -1,9 +1,9 @@
-from aiogram import Dispatcher
+from aiogram import Router
 from aiogram.types import CallbackQuery
 from tg_bot.keyboards.admin_menu import SettingCallback
 
 
-# callback для отключения и включения настроек 
+# коллбэк для отключения и включения настроек 
 async def callback_settings(callback: CallbackQuery, callback_data: SettingCallback):
     if callback_data.flag == 'on':
         await callback.answer(text="Включено", show_alert=True)
@@ -12,6 +12,6 @@ async def callback_settings(callback: CallbackQuery, callback_data: SettingCallb
     await callback.answer()
 
 
-# регистрируем коллбеки
-def register_callback(dp: Dispatcher):
-    dp.callback_query.register(callback_settings, SettingCallback.filter())
+# регистрируем коллбэки
+def register_callback(router: Router):
+    router.callback_query.register(callback_settings, SettingCallback.filter())

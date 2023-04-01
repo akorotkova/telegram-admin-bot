@@ -1,7 +1,10 @@
-from aiogram import Dispatcher
+from aiogram import Router
 from aiogram.types import Message
 from aiogram.filters import Command
 from tg_bot.bot_responses import base_commands as text
+
+
+router: Router = Router()
 
 
 # хендлер для команды /start и /help
@@ -20,8 +23,8 @@ async def process_about_admin_bot_cmd(message: Message):
 
 
 # регистрируем все base хендлеры
-def register_base_handlers(dp: Dispatcher):
-    dp.message.register(process_start_and_help_cmd, Command(commands=['start', 'help']))
-    dp.message.register(process_command_admin_bot_cmd, Command(commands=['command_admin_bot']))
-    dp.message.register(process_about_admin_bot_cmd, Command(commands=['about_admin_bot']))
+def register_base_handlers(router: Router):
+    router.message.register(process_start_and_help_cmd, Command(commands=['start', 'help']))
+    router.message.register(process_command_admin_bot_cmd, Command(commands=['command_admin_bot']))
+    router.message.register(process_about_admin_bot_cmd, Command(commands=['about_admin_bot']))
                         
