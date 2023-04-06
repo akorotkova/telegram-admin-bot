@@ -24,7 +24,7 @@ class Config:
 
 def load_config(path: str) -> Config:
     '''
-    Формирует конфигурации бота
+    Сформировать конфигурации бота
     
     Args:
         path (str): путь до файла .env

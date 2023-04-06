@@ -1,7 +1,8 @@
-from aiogram import Router
+from aiogram import Bot, Router
 from aiogram.types import Message
 from aiogram.filters import Command
-from tg_bot.bot_responses import base_commands as text
+from tg_bot.bot_responses import user_commands as text
+from tg_bot.handlers.admin_handlers import imitation_db
 
 
 router: Router = Router()
@@ -22,9 +23,20 @@ async def process_about_admin_bot_cmd(message: Message):
     await message.reply(text.ABOUT_ADMIN_BOT_TEXT)
 
 
+# хендлер для команды !chat_rules
+async def get_chat_rules(message: Message):
+    # вытаскиваем из бд
+    if imitation_db.get('link_message'):
+        link_message = imitation_db['link_message']
+        await message.reply(f"Правила чата:\n{link_message}", parse_mode='HTML')
+    else:
+        await message.reply(text.NO_CHAT_RULES)
+
+
 # регистрируем все base хендлеры
 def register_base_handlers(router: Router):
     router.message.register(process_start_and_help_cmd, Command(commands=['start', 'help']))
     router.message.register(process_command_admin_bot_cmd, Command(commands=['command_admin_bot']))
     router.message.register(process_about_admin_bot_cmd, Command(commands=['about_admin_bot']))
+    router.message.register(get_chat_rules, Command('chat_rules', prefix='!'))
                         
