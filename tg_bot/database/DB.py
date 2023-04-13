@@ -55,7 +55,7 @@ class Database(metaclass=Singleton):
             CREATE TABLE IF NOT EXISTS settings_list (
                 id_settings SERIAL PRIMARY KEY,
                 name TEXT NOT NULL,
-                standard BOOLEAN NOT NULL
+                standard TEXT NOT NULL
             );
         ''')
 
@@ -65,7 +65,7 @@ class Database(metaclass=Singleton):
                 id_chat INTEGER NOT NULL REFERENCES chats (id_chat),
                 id_settings INTEGER NOT NULL REFERENCES settings_list (id_settings),
                 id_admin INTEGER NOT NULL,
-                status INTEGER NOT NULL,
+                value TEXT NOT NULL,
                 PRIMARY KEY (id_chat, id_settings)
             );
         ''')
