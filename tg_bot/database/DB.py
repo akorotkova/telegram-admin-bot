@@ -147,6 +147,10 @@ class Database(metaclass=Singleton):
         results = await self.db.fetch(query, id_chat, tag)
         return [dict(result) for result in results]
 
+    async def delete_speed_message(self, id_chat: int, message: str, tag: str):
+        query = "DELETE FROM speed_message WHERE id_chat = $1 AND message = $2 AND tag = $3"
+        await self.db.execute(query, id_chat, message, tag)
+
 
     async def put_new_setting(self, name_setting: str, standard: str):
         """ метод для добавления настройки в таблицу стандартных. То есть его вызывать только при запуске бота.
@@ -296,7 +300,7 @@ async def main():
     db1 = Database() # собственно проверка)
     print(id(db), id(db1))
 
-    await db1.put_new_chat(1, 'test') # Чат можно добавить только один раз. Ошибку убрал. Он просто вернет текстом, что данные уже есть в базе "Уже есть в базе"
+    await db1.put_new_chat(id_chat=1, name='test') # Чат можно добавить только один раз. Ошибку убрал. Он просто вернет текстом, что данные уже есть в базе "Уже есть в базе"
 
 
 
@@ -365,8 +369,8 @@ async def main():
     print(messages)
 
 
-
-
+    # удалить сообщение 
+    await db1.delete_speed_message(id_chat=1, message='123', tag="джун")
 
 
     # await db1.drop_all_table() # Удаляет все таблицы и все что в них могло быть. Так что для тестов норм.
