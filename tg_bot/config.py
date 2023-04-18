@@ -14,12 +14,12 @@ class DbConfig:
     db_host: str
     db_user: str
     db_password: str
-    
+
 
 @dataclass
 class Config:
     tg_bot: TgBot
-    db: DbConfig
+    db: DbConfig 
 
 
 def load_config(path: str) -> Config:
@@ -43,7 +43,7 @@ def load_config(path: str) -> Config:
     db_user = env('DB_USER')
     db_password = env('DB_PASSWORD')
     db = DbConfig(database, db_host, db_user, db_password)
-    
-    config = Config(tg_bot, db)
 
+    config = Config(tg_bot, db)
+    
     return config
