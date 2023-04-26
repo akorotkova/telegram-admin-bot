@@ -4,7 +4,7 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 
-from tg_bot.filters.admin_user import IsAdmin
+from tg_bot.filters.admin_filter import IsAdmin
 from tg_bot.bot_responses import admin_commands as text
 from tg_bot.keyboards.admin_menu import get_setting_buttons
 

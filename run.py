@@ -3,7 +3,14 @@ import asyncio
 from aiogram import Bot, Dispatcher
 
 from tg_bot.config import Config, load_config
-from tg_bot.handlers import bot_in_group, add_or_migrate, admin_handlers, callbacks, user_handlers
+from tg_bot.handlers import (
+    bot_in_group,
+    admin_changes_in_group,
+    add_or_migrate, 
+    admin_handlers, 
+    callbacks, 
+    user_handlers
+)
 
 
 async def main():
@@ -15,11 +22,12 @@ async def main():
     
     # регистриуем роутеры в диспетчере
     dp.include_routers(
-        bot_in_group.router, 
+        bot_in_group.router,
+        admin_changes_in_group.router,
         add_or_migrate.router, 
         admin_handlers.router,
         callbacks.router,
-        user_handlers.router    
+        user_handlers.router
     )
 
     # запуск бота
