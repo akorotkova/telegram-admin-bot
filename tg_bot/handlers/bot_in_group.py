@@ -35,7 +35,7 @@ async def bot_added_as_admin(event: ChatMemberUpdated, bot: Bot):
         text=f"Спасибо, что добавили меня в "
              f'{chats_variants[event.chat.type]} "{event.chat.title}" '
              f"как администратора. ID чата: {event.chat.id}\n"
-             f'Теперь я буду помогать вам с модерацией. Перейдите в настройки: /command_admin_bot'
+             f'Теперь я буду помогать вам с модерацией. Перейдите в настройки: /command'
         )
 
 
