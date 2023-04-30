@@ -9,7 +9,8 @@ from tg_bot.handlers import (
     add_or_migrate, 
     admin_handlers, 
     callbacks, 
-    user_handlers
+    user_handlers,
+    bot_handlers
 )
 
 
@@ -27,7 +28,8 @@ async def main():
         add_or_migrate.router, 
         admin_handlers.router,
         callbacks.router,
-        user_handlers.router
+        user_handlers.router,
+        bot_handlers.router
     )
 
     # запуск бота
