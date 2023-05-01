@@ -12,7 +12,7 @@ router: Router = Router()
 @router.callback_query(SettingCallback.filter())
 async def callback_settings(callback: CallbackQuery, callback_data: SettingCallback, bot: Bot):
     if callback.message.chat.type == 'private':
-        await callback.answer(text="Вы используете команду в приватном чате", show_alert=True)
+        await callback.answer(text="Доступно только в групповом чате", show_alert=True)
     else:
         chat_id = callback.message.chat.id
         admins = admin_cache.get(chat_id)

@@ -36,27 +36,6 @@ async def process_deleting_video_cmd(message: Message, bot: Bot):
                            reply_markup=reply_markup)
 
 
-@router.message(Command(commands=['warning_ladder']))
-async def process_warning_ladder_cmd(message: Message, bot: Bot):
-    reply_markup = get_setting_buttons()
-    await bot.send_message(chat_id=message.chat.id, 
-                           text='Предупреждение на лесенку\n(лесенка не удаляется):', 
-                           reply_markup=reply_markup)
-
-
-@router.message(Command(commands=['deleting_ladder']))
-async def process_deleting_ladder_cmd(message: Message, bot: Bot):
-    reply_markup = get_setting_buttons()
-    await bot.send_message(chat_id=message.chat.id, 
-                           text='Предупреждение на лесенку\n(лесенка удаляется):', 
-                           reply_markup=reply_markup)
-
-
-@router.message(Command(commands=['setting_ladder']))
-async def process_setting_ladder_cmd(message: Message):
-    await message.reply(text.SETTING_LADDER_TEXT, parse_mode='HTML')
-
-
 class ChatRules(StatesGroup):
     setting_rules_chat = State()
 
