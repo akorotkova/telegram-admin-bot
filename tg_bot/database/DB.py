@@ -369,7 +369,7 @@ async def main():
     print(messages)
 
 
-    # удалить сообщение 
+    # удалить сообщение
     await db1.delete_speed_message(id_chat=1, message='123', tag="джун")
 
 

@@ -19,9 +19,9 @@ async def process_command_cmd(message: Message):
     await message.answer(text.COMMAND_ADMIN_BOT_TEXT, parse_mode='HTML')
 
 
-@router.message(Command(commands=['about']))
-async def process_about_cmd(message: Message):
-    await message.reply(text.ABOUT_ADMIN_BOT_TEXT)
+# @router.message(Command(commands=['about']))
+# async def process_about_cmd(message: Message):
+#     await message.reply(text.ABOUT_ADMIN_BOT_TEXT)
 
 
 @router.message(Command('chat_rules', prefix='!'))
