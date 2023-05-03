@@ -34,6 +34,14 @@ async def process_deleting_video_cmd(message: Message, bot: Bot):
     await bot.send_message(chat_id=message.chat.id, 
                            text='Удаление видеосообщений:', 
                            reply_markup=reply_markup)
+    
+    
+@router.message(Command(commands=['deleting_file']))
+async def process_deleting_file_cmd(message: Message, bot: Bot):
+    reply_markup = get_setting_buttons()
+    await bot.send_message(chat_id=message.chat.id, 
+                           text='Удаление файлов неразрешенного формата:', 
+                           reply_markup=reply_markup)
 
 
 class ChatRules(StatesGroup):
