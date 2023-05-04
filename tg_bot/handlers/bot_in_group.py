@@ -22,7 +22,8 @@ async def bot_added_as_member(event: ChatMemberUpdated, bot: Bot):
             text=f'Привет! Вы добавили меня в '
                  f'{chats_variants[event.chat.type]} "{event.chat.title}" '
                  f'как обычного участника.\n'
-                 f'Чтобы я мог помогать вам с модерацией чата, добавьте меня в админы.'
+                 f'Чтобы я мог помогать вам с модерацией чата, добавьте меня в админы '
+                 f'и разрешите удалять сообщения в чате.'
         )
     else:
         print('логирование этой ситуации')
@@ -30,22 +31,12 @@ async def bot_added_as_member(event: ChatMemberUpdated, bot: Bot):
 
 @router.my_chat_member(ChatMemberUpdatedFilter(member_status_changed=MEMBER >> ADMINISTRATOR))
 async def bot_added_as_admin(event: ChatMemberUpdated, bot: Bot):
-    chat_member = event.new_chat_member
-    if not chat_member.can_delete_messages:
-        await bot.send_message(
+    await bot.send_message(
         chat_id=event.chat.id,
-        text=f'Спасибо, что добавили меня '
-             f'в администраторы, но мне нужны все права админа, '
-             f'чтобы я мог помогать с модерацией!\n'
-             f'Пожалуйста, добавьте мне право на удаление сообщений в чате.'
-        )
-    else:        
-        await bot.send_message(
-            chat_id=event.chat.id,
-            text=f'Спасибо, что добавили меня в администраторы! '
-                 f'Теперь я буду помогать вам с модерацией.\n'
-                 f'Перейдите в настройки: /command'
-            )
+        text=f'Спасибо, что добавили меня в администраторы! '
+             f'Теперь я буду помогать вам с модерацией.\n'
+             f'Перейдите в настройки: /command'
+    )
 
 
 @router.my_chat_member(ChatMemberUpdatedFilter(member_status_changed=ADMINISTRATOR))
@@ -56,12 +47,6 @@ async def bot_restricted_admin(event: ChatMemberUpdated, bot: Bot):
             chat_id=event.chat.id,
             text=f'Вы ограничили мне права.\n'
                  f'Чтобы я мог помогать вам с модерацией, мне нужны все права админа.'
-    )
-    else:
-        await bot.send_message(
-            chat_id=event.chat.id,
-            text=f'Спасибо! Теперь я буду помогать вам с модерацией.\n'
-                 f'Перейдите в настройки: /command'
         )
 
 

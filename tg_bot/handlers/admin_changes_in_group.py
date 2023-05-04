@@ -6,7 +6,7 @@ from aiogram.filters.chat_member_updated import (
 from aiogram.types import ChatMemberUpdated
 
 from tg_bot.cache import admin_cache
-from tg_bot.utils.utils import get_admins_id_set
+from tg_bot.utils.get_admins import get_admins_id_set
 
 
 router: Router = Router()
