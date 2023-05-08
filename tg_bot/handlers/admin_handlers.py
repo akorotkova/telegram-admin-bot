@@ -13,6 +13,7 @@ router: Router = Router()
 router.message.filter(IsAdmin())
 
 imitation_db = {}  # имитация бд
+imitation_db_msg = {}  # имитация бд для тегов 
 
 
 @router.message(Command(commands=['current_settings']))
@@ -43,6 +44,22 @@ async def process_deleting_file_cmd(message: Message, bot: Bot):
                            text='Удаление файлов неразрешенного формата:', 
                            reply_markup=reply_markup)
     
+
+@router.message(Command(commands=['save_msg'], prefix='!'))
+async def process_save_tag_cmd(message: Message):
+    if message.chat.type == 'private':
+        return await message.reply('Команда недоступна в приватном чате')
+    if message.reply_to_message is not None:
+        _, *tag = message.text.split(maxsplit=1)
+        if tag:
+            chat_id = message.chat.id
+            text_tag = tag[0]
+            url_msg = message.reply_to_message.get_url()
+            imitation_db_msg.setdefault(chat_id, {}).setdefault(text_tag, []).append(url_msg)
+            return await message.reply(f'Сообщение сохранено с тегом <b>{text_tag}</b>', parse_mode='HTML')
+        return await message.reply('Укажите тег для сообщения через пробел после команды')
+    return await message.reply(text='Команда должна быть отправлена реплаем на сообщение')
+        
 
 class ChatRules(StatesGroup):
     setting_rules_chat = State()
