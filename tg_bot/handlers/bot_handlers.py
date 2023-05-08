@@ -23,7 +23,7 @@ def check_bot_permissions(handler):
                      f'Проверьте, являюсь ли я админом чата с возможностью удалять сообщения.'
                 )
     return inner
-  
+
 
 @router.message(F.content_type == ContentType.VOICE)
 @check_bot_permissions
@@ -42,9 +42,9 @@ async def process_warning_voice(message: Message, bot: Bot):
 @router.message(F.content_type.in_({ContentType.DOCUMENT}))
 @check_bot_permissions
 async def process_warning_document(message: Message, bot: Bot):
-        _allowed_formats_file = {'pdf', 'txt', 'conf', 'json', 'xml', 'yml', 'csv', 'png', 'jpg', 'jpeg'}
-        file_format = message.document.file_name.split('.')[-1]
-        if file_format not in _allowed_formats_file:
-            await message.reply(text='Запрещено отправлять в чат файл с данным расширением.')
-            return DeleteMessage(chat_id=message.chat.id, message_id=message.message_id)
+    _allowed_formats_file = {'pdf', 'txt', 'conf', 'json', 'xml', 'yml', 'csv', 'png', 'jpg', 'jpeg'}
+    file_format = message.document.file_name.split('.')[-1]
+    if file_format not in _allowed_formats_file:
+        await message.reply(text='Запрещено отправлять в чат файл с данным расширением.')
+        return DeleteMessage(chat_id=message.chat.id, message_id=message.message_id)
         

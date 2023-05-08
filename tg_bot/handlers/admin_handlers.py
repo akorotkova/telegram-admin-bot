@@ -42,7 +42,7 @@ async def process_deleting_file_cmd(message: Message, bot: Bot):
     await bot.send_message(chat_id=message.chat.id, 
                            text='Удаление файлов неразрешенного формата:', 
                            reply_markup=reply_markup)
-
+    
 
 class ChatRules(StatesGroup):
     setting_rules_chat = State()
