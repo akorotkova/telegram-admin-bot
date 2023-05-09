@@ -20,11 +20,20 @@ async def bot_added_as_member(event: ChatMemberUpdated, bot: Bot):
         await bot.send_message(
             chat_id=event.chat.id,
             text=f'Привет! Вы добавили меня в '
-                 f'{chats_variants[event.chat.type]} "{event.chat.title}" '
+                 f'<b>{chats_variants[event.chat.type]}</b> "{event.chat.title}" '
                  f'как обычного участника.\n'
                  f'Чтобы я мог помогать вам с модерацией чата, добавьте меня в админы '
-                 f'и разрешите удалять сообщения в чате.'
+                 f'и разрешите удалять сообщения в чате.',
+                 parse_mode='HTML'
         )
+        if event.chat.type == 'group':
+            await bot.send_message(
+                chat_id=event.chat.id,
+                text=f'Некоторые мои функции доступны только в <b>супергруппах</b>:\n'
+                     f'https://t.me/tginfo/2856\n'
+                     f'https://t.me/tginfo/1917',
+                     parse_mode='HTML'
+            )
     else:
         print('логирование этой ситуации')
 
