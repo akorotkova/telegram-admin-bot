@@ -59,7 +59,47 @@ async def process_save_tag_cmd(message: Message):
             return await message.reply(f'Сообщение сохранено с тегом <b>{text_tag}</b>', parse_mode='HTML')
         return await message.reply('Укажите тег для сообщения через пробел после команды')
     return await message.reply(text='Команда должна быть отправлена реплаем на сообщение')
-        
+
+
+@router.message(Command(commands=['del_tag'], prefix='!'))
+async def process_del_tag_cmd(message: Message):
+    if message.chat.type == 'private':
+        return await message.reply('Команда недоступна в приватном чате')
+    chat_id = message.chat.id 
+    if chat_id not in imitation_db_msg:
+        return await message.reply('В вашем чате пока что нет тегов')
+    _, *tag = message.text.split(maxsplit=1)
+    if not tag:
+        return await message.reply('Укажите тег через пробел после команды')
+    chat_id = message.chat.id
+    text_tag = tag[0]
+    try:
+        del imitation_db_msg[chat_id][text_tag]
+    except KeyError as e:
+        return await message.reply(f'Тег <b>{text_tag}</b> не найден', parse_mode='HTML')
+    return await message.reply(f'Тег <b>{text_tag}</b> удален', parse_mode='HTML')
+
+
+@router.message(Command(commands=['del_tag_msg'], prefix='!'))
+async def process_del_tag_msg_cmd(message: Message):
+    if message.chat.type == 'private':
+        return await message.reply('Команда недоступна в приватном чате')
+    chat_id = message.chat.id 
+    if chat_id not in imitation_db_msg:
+        return await message.reply('В вашем чате пока что нет тегов')
+    _, *tag_and_url = message.text.split(maxsplit=2)
+    if len(tag_and_url) != 2:
+        return await message.reply('Укажите тег и ссылку на сообщение в формате !del_tag_msg [tag] [url]')
+    chat_id = message.chat.id
+    text_tag, url_msg = tag_and_url
+    try:
+        imitation_db_msg[chat_id][text_tag].remove(url_msg)
+    except KeyError as e:
+        return await message.reply(f'Тег <b>{text_tag}</b> не найден', parse_mode='HTML')
+    except ValueError as e:
+        return await message.reply(f'Невалидная ссылка <b>{url_msg}</b>', parse_mode='HTML')
+    await message.reply(f'Ссылка {url_msg} удалена из тега <b>{text_tag}</b>', parse_mode='HTML')
+
 
 class ChatRules(StatesGroup):
     setting_rules_chat = State()
