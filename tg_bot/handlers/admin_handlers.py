@@ -50,8 +50,10 @@ async def process_save_tag_cmd(message: Message):
     if message.chat.type == 'private':
         return await message.reply('Команда недоступна в приватном чате')
     if message.reply_to_message is not None:
-        _, *tag = message.text.split(maxsplit=1)
+        _, *tag = message.text.split()
         if tag:
+            if len(tag) != 1:
+                return await message.reply('Тег должен состоять из одного слова')
             chat_id = message.chat.id
             text_tag = tag[0]
             url_msg = message.reply_to_message.get_url()
