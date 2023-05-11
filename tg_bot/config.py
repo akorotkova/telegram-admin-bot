@@ -23,16 +23,8 @@ class Config:
 
 
 def load_config(path: str) -> Config:
-    '''
-    Сформировать конфигурации бота
-    
-    Args:
-        path (str): путь до файла .env
-    Returns:
-        config (Config): объект, определяющий настройки бота
-    '''
-    env: Env = Env()
-    env.read_env(path)  # читаем файл .env с переменными окружения
+    env = Env()
+    env.read_env(path)
     
     token = env('BOT_TOKEN')
     admin_ids = [int(admin_id) for admin_id in env.list('ADMIN_IDS')]
