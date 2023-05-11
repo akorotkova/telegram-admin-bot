@@ -11,10 +11,10 @@ from aiogram.filters.chat_member_updated import (
 from tg_bot.cache import migration_cache
 
 
-chats_variants = {'group': 'группу', 'supergroup': 'супергруппу'}
+_chats_variants = {'group': 'группу', 'supergroup': 'супергруппу'}
 
 router = Router()
-router.my_chat_member.filter(F.chat.type.in_(chats_variants))
+router.my_chat_member.filter(F.chat.type.in_(_chats_variants))
 
 
 @router.my_chat_member(ChatMemberUpdatedFilter(member_status_changed=IS_NOT_MEMBER >> MEMBER))
@@ -26,11 +26,11 @@ async def bot_added_in_chat_as_member(event: types.ChatMemberUpdated, bot: Bot):
         if chat_info.permissions.can_send_messages:
             await bot.send_message(
                 chat_id=event.chat.id,
-                text='Привет! Вы добавили меня в '
-                     f'<b>{chats_variants[event.chat.type]}: "{event.chat.title}"</b> '
-                     'как обычного участника.\n'
-                     'Чтобы я мог помогать вам с модерацией чата, добавьте меня в админы '
-                     'и разрешите удалять сообщения в чате.',
+                text=f'Привет! Вы добавили меня в '
+                     f'<b>{_chats_variants[event.chat.type]}: "{event.chat.title}"</b> '
+                     f'как обычного участника.\n'
+                     f'Чтобы я мог помогать вам с модерацией чата, добавьте меня в админы '
+                     f'и разрешите удалять сообщения в чате.',
                 parse_mode='HTML'
             )
             if event.chat.type == 'group':
