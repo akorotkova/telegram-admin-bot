@@ -6,7 +6,7 @@ from tg_bot.config import load_config
 from tg_bot.handlers import (
     bot_in_chat,
     migrate_group,
-    admin_changes_in_group,
+    change_admins,
     admin_handlers, 
     callbacks,
     user_handlers,
@@ -23,7 +23,7 @@ async def main():
     dp.include_routers(
         bot_in_chat.router,
         migrate_group.router,
-        admin_changes_in_group.router,
+        change_admins.router,
         admin_handlers.router,
         callbacks.router,
         user_handlers.router,

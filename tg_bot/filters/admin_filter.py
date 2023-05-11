@@ -4,7 +4,7 @@ from aiogram import Bot, types
 from aiogram.filters import BaseFilter
 
 from tg_bot.cache import admin_cache
-from tg_bot.utils.get_admins import get_admins_id_set
+from tg_bot.utils.set_admins import get_admins_id_set
 
 
 @dataclass
