@@ -7,10 +7,10 @@ from tg_bot.handlers import (
     bot_in_chat,
     migrate_group,
     change_admins,
-    admin_handlers, 
+    admin_handlers,
     callbacks,
     user_handlers,
-    bot_handlers
+    deleting_messages
 )
 
 
@@ -27,7 +27,7 @@ async def main():
         admin_handlers.router,
         callbacks.router,
         user_handlers.router,
-        bot_handlers.router
+        deleting_messages.router
     )
 
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types(), close_bot_session=True)
