@@ -8,6 +8,7 @@ from tg_bot.handlers import (
     migrate_group,
     change_admins,
     admin_handlers,
+    chat_rules,
     callbacks,
     user_handlers,
     deleting_messages
@@ -25,6 +26,7 @@ async def main():
         migrate_group.router,
         change_admins.router,
         admin_handlers.router,
+        chat_rules.router,
         callbacks.router,
         user_handlers.router,
         deleting_messages.router
