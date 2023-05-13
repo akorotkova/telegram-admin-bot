@@ -7,10 +7,10 @@ from tg_bot.handlers import (
     bot_in_chat,
     migrate_group,
     change_admins,
-    admin_handlers,
+    admin_commands,
     chat_rules,
     callbacks,
-    user_handlers,
+    user_commands,
     deleting_messages
 )
 
@@ -25,10 +25,10 @@ async def main():
         bot_in_chat.router,
         migrate_group.router,
         change_admins.router,
-        admin_handlers.router,
+        admin_commands.router,
         chat_rules.router,
         callbacks.router,
-        user_handlers.router,
+        user_commands.router,
         deleting_messages.router
     )
 

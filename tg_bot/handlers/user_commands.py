@@ -3,7 +3,7 @@ from aiogram.types import Message
 from aiogram.filters import Command
 
 from tg_bot.bot_responses import user_commands as text
-from tg_bot.handlers.admin_handlers import imitation_db_msg
+from tg_bot.handlers.admin_commands import imitation_db_msg
 from tg_bot.handlers.chat_rules import imitation_db
 
 
