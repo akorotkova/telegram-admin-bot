@@ -1,24 +1,14 @@
-from functools import wraps
-
 from aiogram import Router, types
 from aiogram.filters import Command
 
 from tg_bot.filters.admin_filter import IsAdmin
+from tg_bot.utils.chat_type import check_chat_is_private
 
 
 router = Router()
 router.message.filter(IsAdmin())
 
 imitation_db_msg = {}  # имитация бд для тегов 
-
-
-def check_chat_is_private(handler):
-    @wraps(handler)
-    async def inner(message: types.Message):
-        if message.chat.type == 'private':
-            return await message.reply(text='Команда недоступна в приватном чате')
-        return await handler(message)
-    return inner
         
 
 @router.message(Command(commands=['save_msg'], prefix='!'))

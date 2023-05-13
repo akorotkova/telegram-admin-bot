@@ -4,6 +4,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 
 from tg_bot.filters.admin_filter import IsAdmin
+from tg_bot.utils.chat_type import check_chat_is_private
 
 
 router = Router()
@@ -17,6 +18,7 @@ class ChatRules(StatesGroup):
 
 
 @router.message(Command('add_chat_rules'))
+@check_chat_is_private
 async def process_add_chat_rules(message: types.Message, state: FSMContext):
     await message.reply('Отправь ссылку на сообщение с правилами чата.')
     await state.set_state(ChatRules.setting_chat_rules)

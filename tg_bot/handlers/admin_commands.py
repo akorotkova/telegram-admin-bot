@@ -3,6 +3,7 @@ from aiogram.filters import Command
 
 from tg_bot.filters.admin_filter import IsAdmin
 from tg_bot.keyboards.admin_menu import get_setting_buttons
+from tg_bot.utils.chat_type import check_chat_is_private
 
 
 router = Router()
@@ -10,6 +11,7 @@ router.message.filter(IsAdmin())
 
 
 @router.message(Command(commands=['current_settings']))
+@check_chat_is_private
 async def process_current_settings_cmd(message: types.Message):
     await message.reply(
         text='<b>Текущие настройки</b>:\n...', 

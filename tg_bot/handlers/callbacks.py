@@ -1,16 +1,15 @@
-from aiogram import Bot, Router
-from aiogram.types import CallbackQuery
+from aiogram import Router, Bot, types
 
 from tg_bot.handlers.callbacks_data import SettingCallback
 from tg_bot.cache import admin_cache
 from tg_bot.utils.set_admins import get_admins_id_set
 
 
-router: Router = Router()
+router = Router()
 
 
 @router.callback_query(SettingCallback.filter())
-async def callback_settings(callback: CallbackQuery, callback_data: SettingCallback, bot: Bot):
+async def callback_settings(callback: types.CallbackQuery, callback_data: SettingCallback, bot: Bot):
     if callback.message.chat.type == 'private':
         await callback.answer(text="Доступно только в групповом чате", show_alert=True)
     else:
