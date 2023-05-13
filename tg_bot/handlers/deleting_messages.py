@@ -12,13 +12,12 @@ _allowed_formats_file = {'pdf', 'txt', 'conf', 'json', 'xml', 'yml', 'csv', 'png
 def check_bot_permission_to_delete(handler):
     @wraps(handler)
     async def inner(message: types.Message, bot: Bot):
-
         if message.chat.type == 'private':
             return await handler(message, bot)
 
         bot_info = await bot.get_chat_member(message.chat.id, bot.id)
 
-        permission_to_delete: bool = bot_info.can_delete_messages
+        permission_to_delete: bool | None = bot_info.can_delete_messages
         config_value: bool = True  # TODO берем из базы значение настройки
 
         if config_value and not permission_to_delete:

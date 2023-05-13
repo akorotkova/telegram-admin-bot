@@ -23,6 +23,7 @@ async def bot_added_in_chat_as_member(event: types.ChatMemberUpdated, bot: Bot):
 
     if event.chat.id not in migration_cache.keys():
         chat_info = await bot.get_chat(event.chat.id)
+        
         if chat_info.permissions.can_send_messages:
             await bot.send_message(
                 chat_id=event.chat.id,

@@ -2,8 +2,8 @@ from aiogram import Router
 from aiogram.types import Message
 from aiogram.filters import Command
 
-from tg_bot.bot_responses import user_commands as text
-from tg_bot.handlers.admin_commands import imitation_db_msg
+from tg_bot.bot_responses.command_cmd_text import COMMAND_CMD_TEXT
+from tg_bot.handlers.chat_tags import imitation_db_msg
 from tg_bot.handlers.chat_rules import imitation_db
 
 
@@ -12,17 +12,22 @@ router: Router = Router()
 
 @router.message(Command(commands=['start', 'help']))
 async def process_start_and_help_cmd(message: Message):
-    await message.reply(text=text.START_AND_HELP_TEXT, parse_mode='HTML')
+    await message.reply(
+        text='Привет. Я - бот для помощи с модерацией чата.\n'
+             '<b>Добавь меня в группу и сделай админом.</b>\n\n'
+             '/command - справка о моих командах.', 
+        parse_mode='HTML'
+    )
 
 
 @router.message(Command(commands=['command']))
 async def process_command_cmd(message: Message):
-    await message.reply(text.COMMAND_ADMIN_BOT_TEXT, parse_mode='HTML')
+    await message.reply(text=COMMAND_CMD_TEXT, parse_mode='HTML')
 
 
 # @router.message(Command(commands=['about']))
 # async def process_about_cmd(message: Message):
-#     await message.reply('https://github.com/poikl246/telegram-admin-bot')
+#     await message.reply(text='https://github.com/poikl246/telegram-admin-bot')
 
 
 @router.message(Command('chat_rules', prefix='!'))
