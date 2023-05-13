@@ -2,9 +2,9 @@ from aiogram import Router, types
 from aiogram.filters import Command
 
 from tg_bot.bot_responses.command_cmd_text import COMMAND_CMD_TEXT
-from tg_bot.handlers.chat_tags import imitation_db_msg
 from tg_bot.handlers.chat_rules import imitation_db
 from tg_bot.utils.chat_type import check_chat_is_private
+from tg_bot.utils.tag import check_tag_in_chat, imitation_db_msg
 
 
 router: Router = Router()
@@ -41,36 +41,29 @@ async def get_chat_rules(message: types.Message):
 @check_chat_is_private
 async def get_msg_tag(message: types.Message):
     _, *tag = message.text.split(maxsplit=1)
-    if tag:
-        chat_id = message.chat.id
-        text_tag = tag[0]
-        try:
-            tag_urls = '\n'.join(imitation_db_msg[chat_id][text_tag])
-            return message.reply(
-                text=f'Сообщения по тегу <b>{text_tag}</b>:\n'
-                     f'{tag_urls}', 
-                parse_mode='HTML'
-            )
-        except KeyError as e:
-            return message.reply(
-                text='Такого тега пока нет. Чтобы добавить тег, '
-                     'используйте команду <code>!save_msg</code>', 
-                parse_mode='HTML'
-            )
-    return await message.reply(
-          text='Укажите тег через пробел после команды, '
-               'по которому хотите получить все ссылки на сообщения'
-    )
-
+    if not tag:
+        return await message.reply(text='Укажите тег через пробел после команды')
+    text_tag = tag[0]
+    try:
+        tag_urls = '\n'.join(imitation_db_msg[message.chat.id][text_tag])
+        await message.reply(
+            text=f'Сообщения по тегу <b>{text_tag}</b>:\n{tag_urls}', 
+            parse_mode='HTML'
+        )
+    except KeyError as e:
+        await message.reply(
+            text='Такого тега пока нет. Чтобы добавить тег, '
+                 'используйте команду <code>!save_msg</code>', 
+            parse_mode='HTML'
+        )
+    
 
 @router.message(Command('get_list_msg', prefix='!'))
+@check_tag_in_chat
 @check_chat_is_private
 async def get_list_tags(message: types.Message):
-    chat_id = message.chat.id 
-    if chat_id not in imitation_db_msg:
-        return await message.reply(text='В вашем чате пока что нет тегов')
     all_tags = []
-    for tag, tag_urls in imitation_db_msg[chat_id].items():
+    for tag, tag_urls in imitation_db_msg[message.chat.id].items():
         all_tags.append(f"<b>{tag}</b>:\n{', '.join(tag_urls)}\n")
-    result = '\n'.join(all_tags)
-    return await message.reply(text=f'Все теги чата:\n{result}', parse_mode='HTML')
+    all_tags = '\n'.join(all_tags)
+    await message.reply(text=f'Все теги чата:\n{all_tags}', parse_mode='HTML')

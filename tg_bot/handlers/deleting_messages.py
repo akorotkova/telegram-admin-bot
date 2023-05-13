@@ -6,7 +6,8 @@ from aiogram.methods.delete_message import DeleteMessage
 
 router = Router()
 
-_allowed_formats_file = {'pdf', 'txt', 'conf', 'json', 'xml', 'yml', 'csv', 'png', 'jpg', 'jpeg'}
+_allowed_formats_file = {'pdf', 'txt', 'conf', 'json', 'xml', 'yml', \
+                         'csv', 'png', 'jpg', 'jpeg', 'docx'}
 
 
 def check_bot_permission_to_delete(handler):

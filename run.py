@@ -34,7 +34,11 @@ async def main():
         deleting_messages.router
     )
 
-    await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types(), close_bot_session=True)
+    await dp.start_polling(
+        bot, 
+        allowed_updates=dp.resolve_used_update_types(),
+        close_bot_session=True
+    )
 
 
 if __name__ == '__main__':
