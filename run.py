@@ -2,7 +2,9 @@ import asyncio
 
 from aiogram import Bot, Dispatcher
 
+from tg_bot.utils.logger import logger
 from tg_bot.config import load_config
+from tg_bot.handlers.errors import errors_handler
 from tg_bot.handlers import (
     bot_in_chat,
     migrate_group,
@@ -14,16 +16,17 @@ from tg_bot.handlers import (
     user_commands,
     deleting_messages
 )
-from tg_bot.utils.logger import logger
 
 
 async def main():
     logger.info('start bot')
-
+    
     config = load_config('.env')
 
     bot = Bot(config.tg_bot.token)
     dp = Dispatcher()
+
+    dp.errors.register(errors_handler)
     
     dp.include_routers(
         bot_in_chat.router,

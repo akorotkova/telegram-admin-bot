@@ -9,6 +9,7 @@ from aiogram.filters.chat_member_updated import (
 )
 
 from tg_bot.cache import migration_cache
+from tg_bot.utils.logger import logger
 
 
 _chats_variants = {'group': 'группу', 'supergroup': 'супергруппу'}
@@ -20,6 +21,7 @@ router.my_chat_member.filter(F.chat.type.in_(_chats_variants))
 @router.my_chat_member(ChatMemberUpdatedFilter(member_status_changed=IS_NOT_MEMBER >> MEMBER))
 async def bot_added_in_chat_as_member(event: types.ChatMemberUpdated, bot: Bot):
     await sleep(1.0)  # учитываем миграцию группы в супергруппу
+    logger.info(f'Бот добавлен в чат: {event.chat.type} - "{event.chat.title}"')
 
     if event.chat.id not in migration_cache.keys():
         chat_info = await bot.get_chat(event.chat.id)
@@ -43,7 +45,7 @@ async def bot_added_in_chat_as_member(event: types.ChatMemberUpdated, bot: Bot):
                     parse_mode='HTML'
                 )
         else:
-            pass  # TODO логирование этой ситуации
+            logger.error(f'Боту запрещено отправлять сообщения в чат: "{event.chat.title}"')
 
 
 @router.my_chat_member(ChatMemberUpdatedFilter(member_status_changed=MEMBER >> ADMINISTRATOR))

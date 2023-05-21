@@ -5,8 +5,8 @@ from logging.handlers import RotatingFileHandler
 logger = logging.getLogger(__name__)
 
 file_handler = RotatingFileHandler(
-    filename='logs.log', 
-    maxBytes=10240, 
+    filename='logs/logs.log', 
+    maxBytes=1024*4096, 
     backupCount=10, 
     encoding='utf-8'
 )
