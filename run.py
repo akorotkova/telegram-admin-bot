@@ -14,9 +14,12 @@ from tg_bot.handlers import (
     user_commands,
     deleting_messages
 )
+from tg_bot.utils.logger import logger
 
 
 async def main():
+    logger.info('start bot')
+
     config = load_config('.env')
 
     bot = Bot(config.tg_bot.token)
@@ -34,13 +37,12 @@ async def main():
         deleting_messages.router
     )
 
-    await dp.start_polling(
-        bot, 
-        allowed_updates=dp.resolve_used_update_types(),
-        close_bot_session=True
-    )
+    await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types(), close_bot_session=True)
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except (KeyboardInterrupt, SystemExit):
+        logger.critical('bot stopped')
     
