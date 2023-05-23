@@ -14,7 +14,8 @@ services:
             - db
         networks:
             - botnet
-
+        volumes:
+            - bot-logs:/app/logs
         ports:
             - "5000:5000"
         restart: always
@@ -35,4 +36,5 @@ networks:
         driver: bridge
 volumes:
     db-data:
+    bot-logs:
 
