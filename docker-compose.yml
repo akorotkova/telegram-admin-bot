@@ -1,32 +1,38 @@
 version: "3"
 
 services:
-  bot:
-    build: .
-    environment:
-      BOT_TOKEN: ${BOT_TOKEN}
-      ADMIN_IDS: ${ADMIN_IDS}
-      DATABASE: ${DATABASE}
-      DB_HOST: db
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-    depends_on:
-      - db
-    networks:
-      - botnet
-  db:
-    image: postgres
-    environment:
-      POSTGRES_DB: ${DATABASE}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    networks:
-      - botnet
+    bot:
+        build: .
+        environment:
+            BOT_TOKEN: ${BOT_TOKEN}
+            ADMIN_IDS: ${ADMIN_IDS}
+            DATABASE: ${DATABASE}
+            DB_HOST: db
+            DB_USER: ${DB_USER}
+            DB_PASSWORD: ${DB_PASSWORD}
+        depends_on:
+            - db
+        networks:
+            - botnet
+
+        ports:
+            - "5000:5000"
+        restart: always
+
+    db:
+        image: postgres
+        environment:
+            POSTGRES_DB: ${DATABASE}
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+        volumes:
+            - db-data:/var/lib/postgresql/data
+        networks:
+            - botnet
+        restart: always
 networks:
-  botnet:
-    driver: bridge
+    botnet:
+        driver: bridge
 volumes:
-  db-data:
+    db-data:
 
