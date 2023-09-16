@@ -16,8 +16,8 @@ services:
             - botnet
         volumes:
             - bot-logs:/app/logs
-        ports:
-            - "5000:5000"
+        # ports:
+        #     - "5000:5000"
         restart: always
 
     db:
